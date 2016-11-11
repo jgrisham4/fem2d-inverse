@@ -1,0 +1,46 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{amsmath,amssymb}
+
+\title{Algorithm for the semi-analytic method for steady-state heat transfer} 
+
+\begin{document}
+
+\maketitle
+
+The governing equation is
+\[
+  \nabla \cdot (k \nabla T) = 0.
+\]
+In this case, the geometry involves an infinitely long hollow cylinder with inner radius $r_i$ and outer radius $r_o$.  The thermal conductivity is given. 
+
+A linear system of equations results from discretizing using the finite element method:
+\begin{equation}\label{eq:one}
+  \mathbf{K} \mathbf{u} = \mathbf{0}
+\end{equation}
+Differentiating \eqref{eq:one} with respect to the design variables, $\mathbf{x}$, yields
+\begin{equation}\label{eq:one}
+  \mathbf{K} \frac{\partial \mathbf{u}}{\partial \mathbf{x}} = - \frac{\partial \mathbf{K}}{\partial \mathbf{x}} \mathbf{u}
+\end{equation}
+In the semi-analytic method, the sensitivity of the stiffness matrix with respect to the design variables is computed using finite differences.  My understanding of how this is done is below:
+
+\begin{enumerate}
+  \item Find forward solution, $\mathbf{u}$.
+  \item Set step size for the $i$-th variable: $\Delta \mathbf{x}_i$.
+  \item Compute sensitivity of the stiffness matrix to $\Delta \mathbf{x}_i$:
+    \[
+      \frac{\Delta \mathbf{K}}{\Delta x_i} \approx \frac{\mathbf{K}(\mathbf{x} + \Delta \mathbf{x}_i) - \mathbf{K}(\mathbf{x} - \Delta \mathbf{x}_i)}{2 \, \Delta x_i}
+    \]
+  \item Compute the sensitivity of the solution to the design variables:
+    \[
+      \frac{\Delta \mathbf{u}}{\Delta x_i} = \mathbf{K}^{-1} \frac{\Delta \mathbf{K}}{\Delta x_i} \mathbf{u}
+    \]
+  \item Compute the sensitivity of the objective function with respect to the design variables:
+    \[
+      \frac{\partial f}{\partial x_i} \approx \frac{f(\mathbf{u} + \Delta \mathbf{u}) - f(\mathbf{u}-\Delta \mathbf{u})}{2 \Delta \mathbf{u}} \frac{\Delta \mathbf{u}}{\Delta x_i} = \frac{f(\mathbf{u} + \Delta \mathbf{u}) - f(\mathbf{u}-\Delta \mathbf{u})}{2\Delta x_i}
+    \]
+\end{enumerate}
+
+
+\end{document}

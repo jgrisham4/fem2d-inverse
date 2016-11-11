@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -std=c++11   CMakeFiles/generate_initial_geometry.dir/generate_initial_geometry.cpp.o  -o generate_initial_geometry -larmadillo 
