@@ -43,9 +43,7 @@ class laplace {
 
   protected:
     arma::Mat<T> K;
-    arma::Mat<T> L;
     arma::Mat<T> U;
-    arma::Mat<T> Kinv;
     arma::Col<T> u;
     arma::Col<T> F;
     mesh<C> grid;
@@ -69,7 +67,6 @@ class laplace {
     inline arma::Col<T> get_u() const { return u; };
     inline arma::Mat<T> get_K() const { return K; };
     inline arma::Col<T> get_f() const { return F; };
-    inline arma::Mat<T> get_Kinv() const { return Kinv; };
     inline mesh<C> get_grid() const { return grid; };
     inline void set_grid(const mesh<C>& m) { grid = m; };
 
@@ -307,19 +304,14 @@ void laplace<T,C>::set_problem_specific_data(const T d) {
 template <typename T,typename C>
 void laplace<T,C>::solve() {
 
-  // Using arma inverse
-  //Kinv = K.i();
-  //u = Kinv * F;
-
   // Using arma solve
-  //arma::solve(u,K,F);
+  arma::solve(u,K,F);
 
   // Using LU decomposition to solve the system
   // The below is used to check whether or not the matrix is upper or lower triangular
   //bool all_zero = all( X.elem(find(trimatl(X))) == 0 );
   // Need to do forward solve and back solve
-  arma::lu(L,U,K);
-  
+  //arma::lu(L,U,K);
 
 }
 

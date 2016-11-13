@@ -292,8 +292,9 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_safdm(const std:
   //df = p_pdr.get_f();
 
   // Computing Delta u = inv(K) (Delta K) u
-  arma::Mat<VT> Ki = p->get_Kinv();
-  du = Ki*(df - dK*(p->get_u()));
+  //arma::Mat<VT> Ki = p->get_Kinv();
+  //du = Ki*(df - dK*(p->get_u()));
+  arma::solve(du,p->get_K(),df - dK*(p->get_u()));
 
   // Computing df/dx = (f(u + Delta u) - f(u - Delta u))/(2 Delta u) (Delta u / Delta x)
   // which can be simplified to df/dx = (f(u+du) - f(u-du))/(2 dx)
@@ -342,8 +343,9 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_sacvm(const std:
   // K u = f
   // K du + dK u = df
   // du = K^(-1) ( df - dK u )
-  arma::Col<VT> du = (p->get_Kinv())*(df - dK*(p->get_u())) ;
-  //arma::Col<VT> du = (p_perturbed.Kreal.i())*(df - dK*(p->get_u())) ;
+  //arma::Col<VT> du = (p->get_Kinv())*(df - dK*(p->get_u())) ;  // this is bad....
+  arma::Col<VT> du(df.n_elem); 
+  arma::solve(du,p->get_K(),df - dK*(p->get_u()));
 
   // Finding df/dx
   arma::Col<std::complex<VT> > updu(p->get_u(),du);
@@ -453,10 +455,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
 
         // Calling member function to compute the sensitivity
         S[j] = VT(-1)*compute_sensitivities_safdm(dX);
-        //S[j] = VT(-1)*compute_sensitivities_fdm(dX);
-        VT Scvm = VT(-1)*compute_sensitivities_cvm(dX);
-        VT Ssacvm = VT(-1)*compute_sensitivities_sacvm(dX);
-        printf("safdm: % 02.6e  cvm: % 02.6e  sacvm: % 02.6e\n",S[j],Scvm,Ssacvm);
 
       }
       std::cout << std::endl;

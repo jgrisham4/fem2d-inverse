@@ -33,7 +33,7 @@
 int main() {
 
   // Inputs for optimization
-  unsigned int max_iterations = 150;
+  unsigned int max_iterations = 300;
   double dr = 1.0e-8;
   double tolerance = 1.0e-3;
   bool use_sacvm = true;

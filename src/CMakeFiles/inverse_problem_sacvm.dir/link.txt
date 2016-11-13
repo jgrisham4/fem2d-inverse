@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11 -std=c++11   CMakeFiles/inverse_problem_sacvm.dir/inverse_problem_sacvm.cpp.o  -o inverse_problem_sacvm -larmadillo 
