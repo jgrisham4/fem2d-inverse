@@ -330,6 +330,8 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_sacvm(const std:
   // Applying boundary conditions
   p_perturbed.apply_bc_dirichlet(0,0,T_inner);
   p_perturbed.apply_bc_dirichlet(1,0,T_outer);
+  //p_perturbed.apply_bc_dirichlet(0,0,VT(0.0));
+  //p_perturbed.apply_bc_dirichlet(1,0,VT(0.0));
 
   // Finding dK
   arma::Mat<VT> dK = p_perturbed.get_K();
@@ -451,6 +453,8 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
 
         // Calling member function to compute the sensitivity
         S[j] = VT(-1)*compute_sensitivities_safdm(dX);
+        VT Ssacvm = VT(-1)*compute_sensitivities_sacvm(dX);
+        printf("safdm: %1.4e  sacvm: %1.4e\n",S[j], Ssacvm);
 
       }
       std::cout << std::endl;
@@ -783,7 +787,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
   std::vector<VT> gradF(r_guess.size());
   std::vector<std::vector<VT> > gradHist;
   std::vector<std::vector<VT> > XHist;
-  arma::Mat<VT> H(r_guess.size(),r_guess.size(),arma::fill:eye);
+  arma::Mat<VT> H(r_guess.size(),r_guess.size(),arma::fill::eye);
   arma::Col<VT> p,y;
   VT s,t;
   VT alpha_opt = VT(2.0);
@@ -880,7 +884,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
 
     // Now have the gradient. Computing sigma and tau
     gradHist.push_back(gradF);
-    p = arma::Col<VT>(X[]);    // pick up here....
+    //p = arma::Col<VT>(X[]);    // pick up here....
 
 
     // Performing 1D search to find minimum along the direction of steepest descent
@@ -924,7 +928,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
     for (unsigned int j=0; j<X.size(); ++j) {
       X[j] += alpha_opt*S[j];
     }
-    Xhist.push_back(X);
+    XHist.push_back(X);
     p->set_problem_specific_data(k);
     p->discretize(imax,jmax,X,r_o);
     p->apply_bc_dirichlet(0,0,T_inner);
