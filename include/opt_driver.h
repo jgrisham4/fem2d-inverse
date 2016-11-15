@@ -33,6 +33,7 @@ class opt_driver {
     VT compute_sensitivities_sacvm(const std::vector<VT>& dr_inner);
     std::vector<VT> optimize_steepest_descent(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm=false);
     std::vector<VT> optimize_conjugate_direction(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm=false);
+    std::vector<VT> optimize_bfgs(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm=false);
 
     // Simple inline methods
     inline int get_imax() const { return imax; };
@@ -102,7 +103,6 @@ U opt_driver<P>::f(const arma::Col<U>& T, const mesh<U>& g) const {
     dy = nodes[(i+1)*jmax-1].get_y() - nodes[(i+1)*jmax-2].get_y();
     dr = sqrt(dx*dx + dy*dy);
     gradT = (T((i+1)*jmax-1) - T((i+1)*jmax-2))/dr;
-    //std::cout << "grad(T_" << i << ") = " << gradT << std::endl;
     qn_computed[i] = -k*gradT;
   }
 
@@ -118,10 +118,6 @@ U opt_driver<P>::f(const arma::Col<U>& T, const mesh<U>& g) const {
     error_norm += ds/2.0*(ff(i+1)+ff(i));
   }
 
-  // The nodes in the mesh object are getting changed after the first objective function call.
-  //p->get_grid().write_mesh("mesh_f_" + std::to_string(f_ctr) + ".tec");
-  //std::cout << "sqrt of error norm: " << sqrt(error_norm) << std::endl;
-  
   return sqrt(error_norm);
 
 }
@@ -568,7 +564,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_conjugate_direct
   std::vector<VT> dX(r_guess.size());
   std::vector<VT> Fhist;
   std::vector<VT> gradF(r_guess.size());
-  VT alpha_opt = VT(5.0);
+  VT alpha_opt = VT(2.0);
   VT x1d_opt, xl, xu, x1, x2, fl, fu, f1, f2;
   VT eps = tol/1.0;
   VT a,b,beta,slope;
@@ -600,7 +596,33 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_conjugate_direct
 
     // Finding gradient
     if (use_sacvm) {
-      std::cout << "Not done yet." << std::endl;
+
+      // Computing sensitivities using the semi-analytic complex variable method
+      std::cout << "Computing df/dx for variable: " << std::endl;
+      for (unsigned int j=0; j<imax-1; ++j) {
+
+        std::cout << std::setw(3);
+        std::cout << j << " " << std::flush;
+        if ((j+1)%20==0) {
+          std::cout << std::endl;
+        }
+
+        // Setting up vector for step size
+        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
+        for (int jj=0; jj<dX.size(); ++jj) {
+          if (jj==j) {
+            dX[jj] = dr;
+          }
+          else {
+            dX[jj] = VT(0);
+          }
+        }
+
+        // Calling member function to compute the sensitivity
+        gradF[j] = compute_sensitivities_sacvm(dX);
+      }
+      std::cout << std::endl;
+
     }
     else {
 
@@ -626,7 +648,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_conjugate_direct
         }
 
         // Calling member function to compute the sensitivity
-        gradF[j] = compute_sensitivities_fdm(dX);
+        gradF[j] = compute_sensitivities_safdm(dX);
 
       }
       std::cout << std::endl;
@@ -745,5 +767,185 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_conjugate_direct
   return X;
 
 }
+
+/**
+ * Method for performing the optimization using the BFGS method.
+ */
+template <typename P>
+std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm) {
+
+  // Declaring variables
+  std::vector<VT> X(r_guess.size());
+  std::vector<VT> S(r_guess.size());
+  std::vector<VT> Sqm1(r_guess.size());
+  std::vector<VT> dX(r_guess.size());
+  std::vector<VT> Fhist;
+  std::vector<VT> gradF(r_guess.size());
+  std::vector<std::vector<VT> > gradHist;
+  std::vector<std::vector<VT> > XHist;
+  arma::Mat<VT> H(r_guess.size(),r_guess.size(),arma::fill:eye);
+  arma::Col<VT> p,y;
+  VT s,t;
+  VT alpha_opt = VT(2.0);
+  VT x1d_opt, xl, xu, x1, x2, fl, fu, f1, f2;
+  VT eps = tol/1.0;
+  VT a,b,beta,slope;
+  unsigned int K;
+  int N;
+  VT F;
+  X = r_guess;
+  F = objective_function<VT>(r_guess);
+  Fhist.push_back(F);
+  
+  // Writing initial guess data to file
+  XHist.push_back(X);
+  p->set_problem_specific_data(k);
+  p->discretize(imax,jmax,X,r_o);
+  p->apply_bc_dirichlet(0,0,T_inner);
+  p->apply_bc_dirichlet(1,0,T_outer);
+  p->solve();
+  p->write_tecplot("initial.tec");
+  
+  // Generating indices for use in populating perturbation vector
+  //std::list<int> indices(r_guess.size());
+  //std::iota(indices.begin(),indices.end(),0);
+
+  // Lambda functions for 1D search
+  auto project = [&X,&S] (VT alpha) {std::vector<VT> Xn; for (int i=0; i<X.size(); ++i) Xn.push_back(X[i] + alpha*S[i]); return Xn;};   // this returns the X which corresponds to X + alpha*S
+  auto one_d_fun = [&] (VT alpha) { std::vector<VT> Xnew = project(alpha); return objective_function<VT>(Xnew); };
+
+  // Iterating
+  for (unsigned int i=0; i<max_iter; ++i) {
+
+    // Finding gradient
+    if (use_sacvm) {
+
+      // Computing sensitivities using the semi-analytic complex variable method
+      std::cout << "Computing df/dx for variable: " << std::endl;
+      for (unsigned int j=0; j<imax-1; ++j) {
+
+        std::cout << std::setw(3);
+        std::cout << j << " " << std::flush;
+        if ((j+1)%20==0) {
+          std::cout << std::endl;
+        }
+
+        // Setting up vector for step size
+        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
+        for (int jj=0; jj<dX.size(); ++jj) {
+          if (jj==j) {
+            dX[jj] = dr;
+          }
+          else {
+            dX[jj] = VT(0);
+          }
+        }
+
+        // Calling member function to compute the sensitivity
+        gradF[j] = compute_sensitivities_sacvm(dX);
+      }
+      std::cout << std::endl;
+
+    }
+    else {
+
+      // Computing sensitivities using the semi-analytic finite difference method
+      std::cout << "Computing df/dx for variable: " << std::endl;
+      for (unsigned int j=0; j<imax-1; ++j) {
+
+        std::cout << std::setw(3);
+        std::cout << j << " " << std::flush;
+        if ((j+1)%20==0) {
+          std::cout << std::endl;
+        }
+
+        // Setting up vector for step size
+        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
+        for (int jj=0; jj<dX.size(); ++jj) {
+          if (jj==j) {
+            dX[jj] = dr;
+          }
+          else {
+            dX[jj] = VT(0);
+          }
+        }
+
+        // Calling member function to compute the sensitivity
+        gradF[j] = compute_sensitivities_safdm(dX);
+
+      }
+      std::cout << std::endl;
+
+    }
+
+    // Now have the gradient. Computing sigma and tau
+    gradHist.push_back(gradF);
+    p = arma::Col<VT>(X[]);    // pick up here....
+
+
+    // Performing 1D search to find minimum along the direction of steepest descent
+    std::cout << "Starting 1D search on iteration " << i << std::endl;
+    K = 3;
+    xu = 2.0*alpha_opt;
+    xl = 0.0;
+    fl = one_d_fun(xl);
+    x1 = (1.0 - tau)*xl + tau*xu;
+    x2 = tau*xl + (1.0 - tau)*xu;
+    f1 = one_d_fun(x1);
+    f2 = one_d_fun(x2);
+    N = (int) (ceil(log(eps)/(log(1.0 - tau)) + 3.0));
+    while (K<N) {
+      ++K;
+
+      if (f1>f2) {
+        xl = x1;
+        fl = f1;
+        x1 = x2;
+        f1 = f2;
+        x2 = tau*xl + (1.0 - tau)*xu;
+        f2 = one_d_fun(x2);
+        alpha_opt = x2;
+      }
+      else {
+        xu = x2;
+        fu = f2;
+        x2 = x1;
+        f2 = f1;
+        x1 = (1.0 - tau)*xl + tau*xu;
+        f1 = one_d_fun(x1);
+        alpha_opt = x1;
+      }
+
+    }
+
+    std::cout << "alpha* = " << alpha_opt << std::endl;
+
+    // Updating X
+    for (unsigned int j=0; j<X.size(); ++j) {
+      X[j] += alpha_opt*S[j];
+    }
+    Xhist.push_back(X);
+    p->set_problem_specific_data(k);
+    p->discretize(imax,jmax,X,r_o);
+    p->apply_bc_dirichlet(0,0,T_inner);
+    p->apply_bc_dirichlet(1,0,T_outer);
+    p->solve();
+    F = objective_function<VT>(X);
+    Fhist.push_back(F);
+
+    // Checking tolerance
+    if (fabs(F)<tol) {
+      std::cout << "Conjugate direction complete." << std::endl;
+      break;
+    }
+  }
+
+  // Writing final result to file
+  p->write_tecplot("final.tec");
+
+  return X;
+
+}
+
 
 #endif
