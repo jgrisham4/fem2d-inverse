@@ -81,8 +81,9 @@ int main() {
 
   // Calling optimization function
   std::cout << "Optimizing." << std::endl;
-  std::vector<double> ri_opt = opt.optimize_steepest_descent(r_guess,max_iterations,dr,tolerance,use_sacvm);
+  //std::vector<double> ri_opt = opt.optimize_steepest_descent(r_guess,max_iterations,dr,tolerance,use_sacvm);
   //std::vector<double> ri_opt = opt.optimize_conjugate_direction(r_guess,max_iterations,dr,tolerance,use_sacvm);
+  std::vector<double> ri_opt = opt.optimize_bfgs(r_guess,max_iterations,dr,tolerance,use_sacvm);
 
   delete lp;
 

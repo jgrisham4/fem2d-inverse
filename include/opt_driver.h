@@ -1,9 +1,23 @@
+/**
+ * This header contains a class which is used to drive the optimization process.
+ * The class is templated based on problem type thereby enabling static 
+ * polymorphism.  The problem parameter, P, represents an analysis class 
+ * that has certain methods defined (e.g., discretize, solve and so on).
+ * Two gradient-based optimization algorithms are implemented: steepest descent
+ * and BFGS.  BFGS should converge much more quickly than the steepest descent
+ * method.  In order to apply this class to another problem, the objective
+ * function must be redefined.  Some things were hardwired for the specific
+ * case being solved.
+ *
+ * @author James Grisham and Ashkan Akbariyeh
+ * @date 11/17/2016
+ */
+
 #ifndef OPTIMIZATIONDRIVERHEADERDEF
 #define OPTIMIZATIONDRIVERHEADERDEF
 
 #include <vector>
 #include <functional>
-#include <list>
 #include <numeric>
 #include <iomanip>
 #include "laplace.h"
@@ -15,6 +29,10 @@
 #define cond 10.0
 #define IMAX 51
 #define JMAX 20
+
+/***************************************************************\
+ * Class definition                                            *
+\***************************************************************/
 
 template <typename P>
 class opt_driver {
@@ -55,9 +73,15 @@ class opt_driver {
 
 };
 
+/***************************************************************\
+ * Class implementation                                        *
+\***************************************************************/
+
 /**
  * Member function for computing the normal heat flux at the outer
  * boundary.
+ *
+ * @return STL vector which contains the normal heat flux at the outer boundary.
  */
 template <typename P>
 std::vector<typename opt_driver<P>::VT> opt_driver<P>::normal_heat_flux() const {
@@ -87,6 +111,8 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::normal_heat_flux() const 
  * temperature field is provided.
  *
  * @param[in] T armadillo column vector of temperatures.
+ * @param[in] g mesh object used to compute finite differences.
+ * @return the value of the objective function.
  */
 template <typename P>
 template <typename U>
@@ -127,6 +153,7 @@ U opt_driver<P>::f(const arma::Col<U>& T, const mesh<U>& g) const {
  * problem specific.
  * 
  * @param[in] design_vars vector of design variables.
+ * @return value of the objective function.
  */
 template <typename P>
 template <typename U>
@@ -167,6 +194,11 @@ U opt_driver<P>::objective_function(const std::vector<U>& design_vars) {
 /**
  * Member function for computing sensitivities using the finite difference
  * method.  Note: first-order accurate finite differences are used.
+ * This should be used for testing only.  It does not produce reliable 
+ * results.
+ *
+ * @param[in] dr_inner vector whose only nonzero value is the value of the perturbation for the i-th variable.
+ * @return sensitivity of the objective function wrt the i-th variable.
  */
 template <typename P>
 typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_fdm(const std::vector<VT>& dr_inner) {
@@ -195,10 +227,6 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_fdm(const std::v
 
   // Returning sensitivity
   // df/dr = ((f(r+dr) - f(r))/dr
-  //std::cout << "dr_i = " << dr_i << std::endl;
-  
-  //printf("{ frpdr = %20.15lf  fr = %20.15lf dr_i = %lf} ",frpdr, f<VT>(p->get_u(),p->get_grid()),dr_i);
-
   return (frpdr - f<VT>(p->get_u(),p->get_grid()))/dr_i;
 
 }
@@ -233,7 +261,7 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_cvm(const std::v
  * Member function for computing the sensitivities using the semi-analytic
  * method.  
  *
- * @param[in] dr_inner real perturbation in the inner radius (one non-zero value).
+ * @param[in] dr_inner real perturbation in the inner radius (one non-zero value in the i-th place).
  * @return df/dr_i - sensitivity of the objective wrt the i-th design variable.
  */
 template <typename P>
@@ -252,8 +280,6 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_safdm(const std:
   // Setting thermal conductivity
   p_pdr.set_problem_specific_data(k);
   p_mdr.set_problem_specific_data(k);
-
-  // SHOULD I APPLY DIRICHLET BCS TO THESE PROBLEMS????
 
   // Assembling K(x+dx)
   p_pdr.discretize(imax,jmax,r_perturbed,r_o);
@@ -280,15 +306,8 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_safdm(const std:
   // Applying boundary conditions
   int nnodes = p_pdr.get_grid().get_num_nodes();
   arma::Col<VT> du(nnodes);
-  //p_pdr.set_K(dK);
-  //p_pdr.set_f(df);
-  //p_pdr.apply_bc_dirichlet(0,0,T_inner);
-  //p_pdr.apply_bc_dirichlet(1,0,T_outer);
-  //dK = p_pdr.get_K();
-  //df = p_pdr.get_f();
 
-  // Computing Delta u = inv(K) (Delta K) u
-  //arma::Mat<VT> Ki = p->get_Kinv();
+  // Computing du
   //du = Ki*(df - dK*(p->get_u()));
   arma::solve(du,p->get_K(),df - dK*(p->get_u()));
 
@@ -307,6 +326,9 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_safdm(const std:
 /**
  * Member function for computing the sensitivities using the semi-analytic
  * complex variable method.
+ *
+ * @param[in] dr_inner real perturbation in the inner radius (one non-zero value).
+ * @return df/dr_i - sensitivity of the objective wrt the i-th design variable.
  */
 template <typename P>
 typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_sacvm(const std::vector<VT>& dr_inner) {
@@ -328,10 +350,15 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_sacvm(const std:
   p_perturbed.discretize_perturbed(imax,jmax,rpdr,r_o);
 
   // Applying boundary conditions
+  // IMPORTANT NOTE: The below application of boundary conditions to the imaginary part
+  // of the perturbation in K and f is equivalent to zeroing out the rows for the nodes
+  // which are on the boundary.  This is a statement of the fact that the temperature
+  // solution is not sensitive on boundary nodes because there is a Dirichlet boundary
+  // condition there.  What about Neumann?  
+  // More specifically, dK * u = df for boundary nodes, assuming that you solved for u
+  // properly in the first place
   p_perturbed.apply_bc_dirichlet(0,0,T_inner);
   p_perturbed.apply_bc_dirichlet(1,0,T_outer);
-  //p_perturbed.apply_bc_dirichlet(0,0,VT(0.0));
-  //p_perturbed.apply_bc_dirichlet(1,0,VT(0.0));
 
   // Finding dK
   arma::Mat<VT> dK = p_perturbed.get_K();
@@ -341,7 +368,7 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_sacvm(const std:
   // K u = f
   // K du + dK u = df
   // du = K^(-1) ( df - dK u )
-  //arma::Col<VT> du = (p->get_Kinv())*(df - dK*(p->get_u())) ;  // this is bad....
+  //arma::Col<VT> du = (p->get_Kinv())*(df - dK*(p->get_u())) ;  // this is bad...
   arma::Col<VT> du(df.n_elem); 
   arma::solve(du,p->get_K(),df - dK*(p->get_u()));
 
@@ -353,6 +380,13 @@ typename opt_driver<P>::VT opt_driver<P>::compute_sensitivities_sacvm(const std:
 
 /**
  * Method for performing the optimization using steepest descent.
+ *
+ * @param[in] r_guess vector which contains initial guess for design variables.
+ * @param[in] max_iter max number of iterations allowed.
+ * @param[in] dr step size used to compute sensitivities.
+ * @param[in] tol tolerance used to measure convergence of the optimization.
+ * @param[in] use_sacvm boolean variable which indicates use of the SACVM method.  It uses the SAM method if false.
+ * @return an STL vector of the optimum design variables.
  */
 template <typename P>
 std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm) {
@@ -382,14 +416,8 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
   p->solve();
   p->write_tecplot("initial.tec");
   
-  // Generating indices for use in populating perturbation vector
-  //std::list<int> indices(p->get_grid().get_num_nodes());
-  std::list<int> indices(r_guess.size());
-  std::iota(indices.begin(),indices.end(),0);
-
   // Lambda functions for 1D search
   auto project = [&X,&S] (VT alpha) {std::vector<VT> Xn(X.size(),VT{0.0}); for (int i=0; i<X.size(); ++i) Xn[i]=X[i] + alpha*S[i]; return Xn; };   // this returns the X which corresponds to X + alpha*S
-  //auto project = [&X,&S] (VT alpha) {std::vector<VT> Xn; for (int i=0; i<X.size(); ++i) Xn.push_back(X[i] + alpha*S[i]); return Xn; };   // this returns the X which corresponds to X + alpha*S
   auto one_d_fun = [&] (VT alpha) { std::vector<VT> Xnew = project(alpha); return objective_function<VT>(Xnew); };
 
   // Iterating
@@ -399,7 +427,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
     if (use_sacvm) {
 
       // Computing sensitivities using the semi-analytic complex variable method
-      std::cout << "Computing df/dx for variable: " << std::endl;
+      std::cout << "Computing sensitivity for variable: " << std::endl;
       for (unsigned int j=0; j<imax-1; ++j) {
 
         std::cout << std::setw(3);
@@ -409,7 +437,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
         }
 
         // Setting up vector for step size
-        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
         for (int jj=0; jj<dX.size(); ++jj) {
           if (jj==j) {
             dX[jj] = dr;
@@ -429,19 +456,16 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
     else {
 
       // Computing sensitivities using the semi-analytic finite difference method
-      std::cout << "Computing df/dx for variable: " << std::endl;
+      std::cout << "Computing sensitivity for variable: " << std::endl;
       for (unsigned int j=0; j<imax-1; ++j) {
 
-        /*
         std::cout << std::setw(3);
         std::cout << j << " " << std::flush;
         if ((j+1)%20==0) {
           std::cout << std::endl;
         }
-        */
 
         // Setting up vector for step size
-        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
         for (int jj=0; jj<dX.size(); ++jj) {
           if (jj==j) {
             dX[jj] = dr;
@@ -453,35 +477,13 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
 
         // Calling member function to compute the sensitivity
         S[j] = VT(-1)*compute_sensitivities_safdm(dX);
-        VT Ssacvm = VT(-1)*compute_sensitivities_sacvm(dX);
-        printf("safdm: %1.4e  sacvm: %1.4e\n",S[j], Ssacvm);
 
       }
       std::cout << std::endl;
 
     }
     
-
-    // Need to bracket here
-    /*
-    std::cout << "Bracketing." << std::endl;
-    xu = 0.01;
-    xl = 0.0;
-    aa = 1.5;
-    fu = one_d_fun(xu);
-    fl = one_d_fun(xl);
-    while (fl*fu>=VT(0)) {
-      x1 = xl;
-      xl = xu;
-      fl = fu;
-      xu = (1.0+aa)*xu - aa*x1;
-      if (xu > xmax) {
-        break;
-      }
-      fu = one_d_fun(xu);
-    }
-    */
-    //xu = 10.0;
+    // Adaptively choosing the upper bound on the 1D search
     xu = 2.0*alpha_opt;
     xl = 0.0;
     fu = one_d_fun(xu);
@@ -518,8 +520,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
       }
 
     }
-    //alpha_opt = (xl + x1 + x2 + xu)/4.0;
-    std::cout << "alpha* = " << alpha_opt << std::endl;
 
     // Updating X
     for (unsigned int j=0; j<X.size(); ++j) {
@@ -532,14 +532,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
     p->apply_bc_dirichlet(1,0,T_outer);
     p->solve();
     Fhist.push_back(F);
-
-#ifdef OPT_VERBOSE
-    std::cout << "iteration: " << i << " objective value: " << F << std::endl;
-    /*for (auto val : X) {
-      std::cout << val << " ";
-    }
-    std::cout << std::endl;*/
-#endif 
+    printf("Objective function value: %1.6e\n",F);
 
     // Checking tolerance
     if (fabs(F)<tol) {
@@ -556,224 +549,14 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
 }
 
 /**
- * Method for performing the optimization using the conjugate direction method.
- */
-template <typename P>
-std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_conjugate_direction(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm) {
-
-  // Declaring variables
-  std::vector<VT> X(r_guess.size());
-  std::vector<VT> S(r_guess.size());
-  std::vector<VT> Sqm1(r_guess.size());
-  std::vector<VT> dX(r_guess.size());
-  std::vector<VT> Fhist;
-  std::vector<VT> gradF(r_guess.size());
-  VT alpha_opt = VT(2.0);
-  VT x1d_opt, xl, xu, x1, x2, fl, fu, f1, f2;
-  VT eps = tol/1.0;
-  VT a,b,beta,slope;
-  unsigned int K;
-  int N;
-  VT F;
-  X = r_guess;
-  F = objective_function<VT>(r_guess);
-  Fhist.push_back(F);
-  
-  // Writing initial guess data to file
-  p->set_problem_specific_data(k);
-  p->discretize(imax,jmax,X,r_o);
-  p->apply_bc_dirichlet(0,0,T_inner);
-  p->apply_bc_dirichlet(1,0,T_outer);
-  p->solve();
-  p->write_tecplot("initial.tec");
-  
-  // Generating indices for use in populating perturbation vector
-  //std::list<int> indices(r_guess.size());
-  //std::iota(indices.begin(),indices.end(),0);
-
-  // Lambda functions for 1D search
-  auto project = [&X,&S] (VT alpha) {std::vector<VT> Xn; for (int i=0; i<X.size(); ++i) Xn.push_back(X[i] + alpha*S[i]); return Xn;};   // this returns the X which corresponds to X + alpha*S
-  auto one_d_fun = [&] (VT alpha) { std::vector<VT> Xnew = project(alpha); return objective_function<VT>(Xnew); };
-
-  // Iterating
-  for (unsigned int i=0; i<max_iter; ++i) {
-
-    // Finding gradient
-    if (use_sacvm) {
-
-      // Computing sensitivities using the semi-analytic complex variable method
-      std::cout << "Computing df/dx for variable: " << std::endl;
-      for (unsigned int j=0; j<imax-1; ++j) {
-
-        std::cout << std::setw(3);
-        std::cout << j << " " << std::flush;
-        if ((j+1)%20==0) {
-          std::cout << std::endl;
-        }
-
-        // Setting up vector for step size
-        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
-        for (int jj=0; jj<dX.size(); ++jj) {
-          if (jj==j) {
-            dX[jj] = dr;
-          }
-          else {
-            dX[jj] = VT(0);
-          }
-        }
-
-        // Calling member function to compute the sensitivity
-        gradF[j] = compute_sensitivities_sacvm(dX);
-      }
-      std::cout << std::endl;
-
-    }
-    else {
-
-      // Computing sensitivities using the semi-analytic finite difference method
-      std::cout << "Computing df/dx for variable: " << std::endl;
-      for (unsigned int j=0; j<imax-1; ++j) {
-
-        std::cout << std::setw(3);
-        std::cout << j << " " << std::flush;
-        if ((j+1)%20==0) {
-          std::cout << std::endl;
-        }
-
-        // Setting up vector for step size
-        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
-        for (int jj=0; jj<dX.size(); ++jj) {
-          if (jj==j) {
-            dX[jj] = dr;
-          }
-          else {
-            dX[jj] = VT(0);
-          }
-        }
-
-        // Calling member function to compute the sensitivity
-        gradF[j] = compute_sensitivities_safdm(dX);
-
-      }
-      std::cout << std::endl;
-
-    }
-
-    // Now have the gradient, need to correct gradient so that it is 
-    // conjugate 
-    if (i!=0) {
-      b = VT(0.0);
-      for (int j=0; j<S.size(); ++j) {
-        b += gradF[j]*gradF[j];
-      }
-      beta = b/a;
-      for (int j=0; j<S.size(); ++j) {
-        S[j] = -gradF[j] + beta*Sqm1[j];
-      }
-      a = b;
-      slope = VT(0.0);
-      for (int j=0; j<S.size(); ++j) {
-        slope += S[j]*gradF[j];
-      }
-      if (slope >= VT(0.0)) {
-        for (int k=0; k<S.size(); ++k) {
-          S[k] = -gradF[k];
-        }
-      }
-    }
-    else {
-      a = VT(0.0);
-      for (int k=0; k<S.size(); ++k) {
-        a += gradF[k]*gradF[k];
-        S[k] = VT(-1)*gradF[k];
-      }
-    }
-    Sqm1 = S;
-
-    // Need to bracket here
-    /*
-    std::cout << "Bracketing." << std::endl;
-    xu = 0.5;
-    while (fu < fl) {
-      xu *= 1.5;
-      fu = one_d_fun(xu);
-    }
-    */
-
-    // Performing 1D search to find minimum along the direction of steepest descent
-    std::cout << "Starting 1D search on iteration " << i << std::endl;
-    K = 3;
-    xu = 2.0*alpha_opt;
-    xl = 0.0;
-    fl = one_d_fun(xl);
-    x1 = (1.0 - tau)*xl + tau*xu;
-    x2 = tau*xl + (1.0 - tau)*xu;
-    f1 = one_d_fun(x1);
-    f2 = one_d_fun(x2);
-    N = (int) (ceil(log(eps)/(log(1.0 - tau)) + 3.0));
-    while (K<N) {
-      ++K;
-
-      if (f1>f2) {
-        xl = x1;
-        fl = f1;
-        x1 = x2;
-        f1 = f2;
-        x2 = tau*xl + (1.0 - tau)*xu;
-        f2 = one_d_fun(x2);
-        alpha_opt = x2;
-      }
-      else {
-        xu = x2;
-        fu = f2;
-        x2 = x1;
-        f2 = f1;
-        x1 = (1.0 - tau)*xl + tau*xu;
-        f1 = one_d_fun(x1);
-        alpha_opt = x1;
-      }
-
-    }
-
-    std::cout << "alpha* = " << alpha_opt << std::endl;
-
-    // Updating X
-    for (unsigned int j=0; j<X.size(); ++j) {
-      X[j] += alpha_opt*S[j];
-    }
-    p->set_problem_specific_data(k);
-    p->discretize(imax,jmax,X,r_o);
-    p->apply_bc_dirichlet(0,0,T_inner);
-    p->apply_bc_dirichlet(1,0,T_outer);
-    p->solve();
-    F = objective_function<VT>(X);
-    Fhist.push_back(F);
-
-#ifdef OPT_VERBOSE
-    std::cout << "iteration: " << i << " objective value: " << F << std::endl;;
-    /*for (auto val : X) {
-      std::cout << val << " ";
-    }
-    std::cout << std::endl;
-    */
-#endif 
-
-    // Checking tolerance
-    if (fabs(F)<tol) {
-      std::cout << "Conjugate direction complete." << std::endl;
-      break;
-    }
-  }
-
-  // Writing final result to file
-  p->write_tecplot("final.tec");
-
-  return X;
-
-}
-
-/**
  * Method for performing the optimization using the BFGS method.
+ *
+ * @param[in] r_guess vector which contains initial guess for design variables.
+ * @param[in] max_iter max number of iterations allowed.
+ * @param[in] dr step size used to compute sensitivities.
+ * @param[in] tol tolerance used to measure convergence of the optimization.
+ * @param[in] use_sacvm boolean variable which indicates use of the SACVM method.  It uses the SAM method if false.
+ * @return an STL vector of the optimum design variables.
  */
 template <typename P>
 std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::vector<VT>& r_guess, const unsigned int max_iter, const VT dr, const VT tol, const bool use_sacvm) {
@@ -782,13 +565,16 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
   std::vector<VT> X(r_guess.size());
   std::vector<VT> S(r_guess.size());
   std::vector<VT> Sqm1(r_guess.size());
+  arma::Col<VT> Sarma(r_guess.size());
   std::vector<VT> dX(r_guess.size());
   std::vector<VT> Fhist;
+  std::vector<std::vector<VT> > Xhist;
   std::vector<VT> gradF(r_guess.size());
   std::vector<std::vector<VT> > gradHist;
-  std::vector<std::vector<VT> > XHist;
-  arma::Mat<VT> H(r_guess.size(),r_guess.size(),arma::fill::eye);
-  arma::Col<VT> p,y;
+  arma::Mat<VT> Hq(r_guess.size(),r_guess.size(),arma::fill::eye);
+  arma::Mat<VT> Hqp1(r_guess.size(),r_guess.size(),arma::fill::eye);
+  arma::Mat<VT> D(r_guess.size(),r_guess.size());
+  arma::Col<VT> pvec,y;
   VT s,t;
   VT alpha_opt = VT(2.0);
   VT x1d_opt, xl, xu, x1, x2, fl, fu, f1, f2;
@@ -802,7 +588,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
   Fhist.push_back(F);
   
   // Writing initial guess data to file
-  XHist.push_back(X);
+  Xhist.push_back(X);
   p->set_problem_specific_data(k);
   p->discretize(imax,jmax,X,r_o);
   p->apply_bc_dirichlet(0,0,T_inner);
@@ -810,10 +596,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
   p->solve();
   p->write_tecplot("initial.tec");
   
-  // Generating indices for use in populating perturbation vector
-  //std::list<int> indices(r_guess.size());
-  //std::iota(indices.begin(),indices.end(),0);
-
   // Lambda functions for 1D search
   auto project = [&X,&S] (VT alpha) {std::vector<VT> Xn; for (int i=0; i<X.size(); ++i) Xn.push_back(X[i] + alpha*S[i]); return Xn;};   // this returns the X which corresponds to X + alpha*S
   auto one_d_fun = [&] (VT alpha) { std::vector<VT> Xnew = project(alpha); return objective_function<VT>(Xnew); };
@@ -821,11 +603,11 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
   // Iterating
   for (unsigned int i=0; i<max_iter; ++i) {
 
-    // Finding gradient
+    // Finding gradient using either the SAM or SACVM
     if (use_sacvm) {
 
       // Computing sensitivities using the semi-analytic complex variable method
-      std::cout << "Computing df/dx for variable: " << std::endl;
+      std::cout << "Computing sensitivity for variable: " << std::endl;
       for (unsigned int j=0; j<imax-1; ++j) {
 
         std::cout << std::setw(3);
@@ -835,7 +617,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
         }
 
         // Setting up vector for step size
-        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
         for (int jj=0; jj<dX.size(); ++jj) {
           if (jj==j) {
             dX[jj] = dr;
@@ -854,7 +635,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
     else {
 
       // Computing sensitivities using the semi-analytic finite difference method
-      std::cout << "Computing df/dx for variable: " << std::endl;
+      std::cout << "Computing sensitivity for variable: " << std::endl;
       for (unsigned int j=0; j<imax-1; ++j) {
 
         std::cout << std::setw(3);
@@ -864,7 +645,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
         }
 
         // Setting up vector for step size
-        //std::transform(indices.begin(),indices.end(),dX.begin(),[=](int k){ return k == j ? dr : VT(0); });
         for (int jj=0; jj<dX.size(); ++jj) {
           if (jj==j) {
             dX[jj] = dr;
@@ -882,9 +662,30 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
 
     }
 
-    // Now have the gradient. Computing sigma and tau
+    // Adding gradient to history
     gradHist.push_back(gradF);
-    //p = arma::Col<VT>(X[]);    // pick up here....
+
+    // Computing the proper search direction
+    // This is the guts of the BFGS method.  It computes an
+    // approximation for the inverse of the Hessian matrix.
+    if (i!=0) {
+      pvec = arma::Col<VT>(Xhist.back()) - arma::Col<VT>(Xhist[Xhist.size()-2]);
+      y = arma::Col<VT>(gradHist.back()) - arma::Col<VT>(gradHist[gradHist.size()-2]);
+      s = arma::dot(pvec,y);
+      t = arma::dot(y,Hq*y);
+      D = (s + t)/(s*s)*(pvec*pvec.t()) - VT(1.0)/s*(Hq*y*pvec.t() + pvec*(Hq*y).t());
+      Hqp1 = Hq + D;
+      Sarma = -Hqp1*arma::Col<VT>(gradF);
+      for (int k=0; k<Sarma.n_elem; ++k) {
+        S[k] = Sarma[k];
+      }
+      Hq = Hqp1;
+    }
+    else {
+      for (int k=0; k<gradF.size(); ++k) {
+        S[k] = -gradF[k];
+      }
+    }
 
 
     // Performing 1D search to find minimum along the direction of steepest descent
@@ -922,24 +723,23 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
 
     }
 
-    std::cout << "alpha* = " << alpha_opt << std::endl;
-
-    // Updating X
+    // Updating the design variables, X
     for (unsigned int j=0; j<X.size(); ++j) {
       X[j] += alpha_opt*S[j];
     }
-    XHist.push_back(X);
+    Xhist.push_back(X);
     p->set_problem_specific_data(k);
     p->discretize(imax,jmax,X,r_o);
     p->apply_bc_dirichlet(0,0,T_inner);
     p->apply_bc_dirichlet(1,0,T_outer);
     p->solve();
     F = objective_function<VT>(X);
+    printf("Objective function value: %1.6e\n",F);
     Fhist.push_back(F);
 
     // Checking tolerance
     if (fabs(F)<tol) {
-      std::cout << "Conjugate direction complete." << std::endl;
+      std::cout << "BFGS complete." << std::endl;
       break;
     }
   }

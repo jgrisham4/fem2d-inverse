@@ -1,5 +1,4 @@
 /**
- * \file boundary.h
  * \class boundary
  *
  * This is a simple container class which holds boundary information.
