@@ -22,13 +22,13 @@
 #include <iomanip>
 #include "laplace.h"
 
-#define tau 0.381966
-#define TINNER 373.0
-#define TOUTER 283.0
-#define RO 10.0
-#define cond 10.0
-#define IMAX 51
-#define JMAX 20
+#define tau 0.381966   // constant used in Golden section search
+#define TINNER 373.0   // inner BC on o-grid
+#define TOUTER 283.0   // outer BC on o-grid
+#define RO 10.0        // outer radius
+#define cond 10.0      // thermal conductivity [W/(m-K)]
+#define IMAX 51        // number of grid points in the theta-direction
+#define JMAX 20        // number of grid points in the r-direction
 
 /***************************************************************\
  * Class definition                                            *
@@ -58,6 +58,9 @@ class opt_driver {
     inline int get_jmax() const { return jmax; };
     inline void set_problem(P* prob) { p = prob; };
     inline void set_qn_target(const std::vector<VT>& qn_t) { qn_target = qn_t; };
+    
+    // Overloading ostream operator
+    template <typename U> friend std::ostream& operator<<(std::ostream& os, const opt_driver<U>& opt);
 
   private:
     P* p;
@@ -70,8 +73,44 @@ class opt_driver {
     VT r_o;
     VT T_inner;
     VT T_outer;
+    std::vector<std::vector<VT> > gradHist;
+    std::vector<std::vector<VT> > Xhist;
+    std::vector<VT> Fhist;
 
 };
+
+// Overloaded ostream operator
+template <typename U>
+std::ostream& operator<<(std::ostream& os, const opt_driver<U>& opt) {
+
+  // Writing header
+  os << "# fmt: Fhist[i] Xhist[i] gradHist[i]\n";
+  os << "ndvs " << opt.Xhist[0].size() << std::endl;
+  os << "niter " << opt.Fhist.size() << std::endl;
+  os.setf(std::ios_base::scientific);
+
+  // Writing data for iterations
+  for (unsigned int i=0; i<opt.Fhist.size()-1; ++i) {
+    os << opt.Fhist[i] << " ";
+    for (unsigned int j=0; j<opt.Xhist[i].size(); ++j) {
+      os << opt.Xhist[i][j] << " ";
+    }
+    for (unsigned int j=0; j<opt.gradHist[i].size(); ++j) {
+      os << opt.gradHist[i][j] << " ";
+    }
+    os << std::endl;
+  }
+  
+  // Writing the final result
+  os << opt.Fhist.back() << " ";
+  for (unsigned int j=0; j<opt.Xhist.back().size(); ++j) {
+    os << opt.Xhist.back()[j] << " ";
+  }
+
+  return os;
+
+}
+
 
 /***************************************************************\
  * Class implementation                                        *
@@ -166,7 +205,7 @@ U opt_driver<P>::objective_function(const std::vector<U>& design_vars) {
   for (auto var : design_vars) {
     if (abs(var) > r_o) {
       std::cout << "Warning: inner radius larger than outer radius." << std::endl;
-      return 1.0e4*pow(var - U(r_o),2);
+      return 1.0e6*pow(var - U(r_o),2);
     }
   }
 
@@ -395,7 +434,6 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
   std::vector<VT> X(r_guess.size());
   std::vector<VT> S(r_guess.size());
   std::vector<VT> dX(r_guess.size());
-  std::vector<VT> Fhist;
   VT alpha_opt = 1.0;
   VT x1d_opt, xl, xu, x1, x2, fl, fu, f1, f2;
   VT aa,xmax;
@@ -406,6 +444,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
   X = r_guess;
   F = objective_function<VT>(r_guess);
   Fhist.push_back(F);
+  Xhist.push_back(X);
   xmax = 10.0;
   
   // Writing initial guess data to file
@@ -447,7 +486,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
         }
 
         // Calling member function to compute the sensitivity
-        S[j] = VT(-1)*compute_sensitivities_sacvm(dX);
+        S[j] = compute_sensitivities_sacvm(dX);
 
       }
       std::cout << std::endl;
@@ -476,7 +515,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
         }
 
         // Calling member function to compute the sensitivity
-        S[j] = VT(-1)*compute_sensitivities_safdm(dX);
+        S[j] = compute_sensitivities_safdm(dX);
 
       }
       std::cout << std::endl;
@@ -523,7 +562,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
 
     // Updating X
     for (unsigned int j=0; j<X.size(); ++j) {
-      X[j] += alpha_opt*S[j];
+      X[j] -= alpha_opt*S[j];
     }
     F = objective_function(X);
     p->set_problem_specific_data(k);
@@ -531,7 +570,9 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_steepest_descent
     p->apply_bc_dirichlet(0,0,T_inner);
     p->apply_bc_dirichlet(1,0,T_outer);
     p->solve();
+    Xhist.push_back(X);
     Fhist.push_back(F);
+    gradHist.push_back(S);
     printf("Objective function value: %1.6e\n",F);
 
     // Checking tolerance
@@ -567,10 +608,7 @@ std::vector<typename opt_driver<P>::VT> opt_driver<P>::optimize_bfgs(const std::
   std::vector<VT> Sqm1(r_guess.size());
   arma::Col<VT> Sarma(r_guess.size());
   std::vector<VT> dX(r_guess.size());
-  std::vector<VT> Fhist;
-  std::vector<std::vector<VT> > Xhist;
   std::vector<VT> gradF(r_guess.size());
-  std::vector<std::vector<VT> > gradHist;
   arma::Mat<VT> Hq(r_guess.size(),r_guess.size(),arma::fill::eye);
   arma::Mat<VT> Hqp1(r_guess.size(),r_guess.size(),arma::fill::eye);
   arma::Mat<VT> D(r_guess.size(),r_guess.size());

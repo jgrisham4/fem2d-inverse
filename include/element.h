@@ -3,7 +3,7 @@
  * \class element
  *
  * This class represents individual elements in the mesh.  There
- * are methods for getting the Jacobian determinant, finding 
+ * are methods for getting the Jacobian determinant, finding
  * derivatives of the i-th shape function with respect to either
  * xi or eta, and others.
  *
@@ -28,7 +28,7 @@
 
 template <typename T>
 class element {
-  
+
   public:
     element() {};
     element(const std::vector<int>& conn) : connectivity{conn} {};
@@ -43,7 +43,7 @@ class element {
   private:
     std::vector<int> connectivity;
     std::vector<node<T> > nodes;
-    
+
 };
 
 /***************************************************************\
@@ -62,13 +62,13 @@ template <typename T> void element<T>::assign_nodes(const std::vector<node<T> >&
     nodes[i] = mesh_nodes[connectivity[i]];
   }
 }
-  
+
 /**
   Method for returning the connectivity.
 
   @return connectivity a vector of global node numbers for the current element.
 */
-template <typename T> 
+template <typename T>
 std::vector<int> element<T>::get_connectivity() const {
   return connectivity;
 }
@@ -83,15 +83,15 @@ std::vector<int> element<T>::get_connectivity() const {
   @param[out] detJ the determinant of the Jacobian matrix.
   @param[out] A an Armadillo matrix which contains the derivatives of the shape functions wrt xi and eta.
 */
-template <typename T> 
+template <typename T>
 void element<T>::compute_jacobian(const T xi, const T eta, arma::Mat<T>& Jinv, T& detJ, arma::Mat<T>& A) const {
-  
+
   // Declaring variables
   A.zeros(2,4);
   arma::Mat<T> B(4,2);
   arma::Mat<T> J;
 
-  // Forming A matrix 
+  // Forming A matrix
   for (int i=0; i<4; ++i) {
     A(0,i) = dNdxi<T>(i,xi,eta);
     A(1,i) = dNdeta<T>(i,xi,eta);
@@ -128,7 +128,7 @@ void element<T>::compute_jacobian(const T xi, const T eta, arma::Mat<T>& Jinv, T
 
 /**
   This method is for computing dN/dx and dN/dy for the i-th shape function.
-  
+
   @param[in] i integer index for the i-th shape function.
   @param[in] xi first coordinate in the computational plane.
   @param[in] eta second coordinate in the computational plane.
@@ -167,7 +167,7 @@ template <typename T> T element<T>::get_detJ(const T xi, const T eta) const {
 }
 
 /**
-  Method for getting an STL vector of node objects for the 
+  Method for getting an STL vector of node objects for the
   current element.
 
   @return An STL vector which contains node objects for the current element.

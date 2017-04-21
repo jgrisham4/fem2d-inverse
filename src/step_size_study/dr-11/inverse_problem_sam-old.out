@@ -1,0 +1,50 @@
+Creating a new problem object. 
+Optimizing.
+Computing sensitivity for variable: 
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 
+ 20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39 
+ 40  41  42  43  44  45  46  47  48  49 
+Starting 1D search on iteration 0
+Objective function value: 5.184938e-01
+Computing sensitivity for variable: 
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 
+ 20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39 
+ 40  41  42  43  44  45  46  47  48  49 
+Starting 1D search on iteration 1
+Objective function value: 2.440816e-01
+Computing sensitivity for variable: 
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 
+ 20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39 
+ 40  41  42  43  44  45  46  47  48  49 
+Starting 1D search on iteration 2
+Objective function value: 2.141192e-01
+Computing sensitivity for variable: 
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 
+ 20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39 
+ 40  41  42  43  44  45  46  47  48  49 
+Starting 1D search on iteration 3
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Warning: inner radius larger than outer radius.
+Objective function value: 1.004911e-05
+BFGS complete.

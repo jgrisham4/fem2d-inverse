@@ -1,0 +1,1952 @@
+variables="x","y","T"
+zone t="Temperature" n=1000 e=950 et=quadrilateral f=fepoint
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+-nan -nan -nan
+1 2 22 21 
+2 3 23 22 
+3 4 24 23 
+4 5 25 24 
+5 6 26 25 
+6 7 27 26 
+7 8 28 27 
+8 9 29 28 
+9 10 30 29 
+10 11 31 30 
+11 12 32 31 
+12 13 33 32 
+13 14 34 33 
+14 15 35 34 
+15 16 36 35 
+16 17 37 36 
+17 18 38 37 
+18 19 39 38 
+19 20 40 39 
+21 22 42 41 
+22 23 43 42 
+23 24 44 43 
+24 25 45 44 
+25 26 46 45 
+26 27 47 46 
+27 28 48 47 
+28 29 49 48 
+29 30 50 49 
+30 31 51 50 
+31 32 52 51 
+32 33 53 52 
+33 34 54 53 
+34 35 55 54 
+35 36 56 55 
+36 37 57 56 
+37 38 58 57 
+38 39 59 58 
+39 40 60 59 
+41 42 62 61 
+42 43 63 62 
+43 44 64 63 
+44 45 65 64 
+45 46 66 65 
+46 47 67 66 
+47 48 68 67 
+48 49 69 68 
+49 50 70 69 
+50 51 71 70 
+51 52 72 71 
+52 53 73 72 
+53 54 74 73 
+54 55 75 74 
+55 56 76 75 
+56 57 77 76 
+57 58 78 77 
+58 59 79 78 
+59 60 80 79 
+61 62 82 81 
+62 63 83 82 
+63 64 84 83 
+64 65 85 84 
+65 66 86 85 
+66 67 87 86 
+67 68 88 87 
+68 69 89 88 
+69 70 90 89 
+70 71 91 90 
+71 72 92 91 
+72 73 93 92 
+73 74 94 93 
+74 75 95 94 
+75 76 96 95 
+76 77 97 96 
+77 78 98 97 
+78 79 99 98 
+79 80 100 99 
+81 82 102 101 
+82 83 103 102 
+83 84 104 103 
+84 85 105 104 
+85 86 106 105 
+86 87 107 106 
+87 88 108 107 
+88 89 109 108 
+89 90 110 109 
+90 91 111 110 
+91 92 112 111 
+92 93 113 112 
+93 94 114 113 
+94 95 115 114 
+95 96 116 115 
+96 97 117 116 
+97 98 118 117 
+98 99 119 118 
+99 100 120 119 
+101 102 122 121 
+102 103 123 122 
+103 104 124 123 
+104 105 125 124 
+105 106 126 125 
+106 107 127 126 
+107 108 128 127 
+108 109 129 128 
+109 110 130 129 
+110 111 131 130 
+111 112 132 131 
+112 113 133 132 
+113 114 134 133 
+114 115 135 134 
+115 116 136 135 
+116 117 137 136 
+117 118 138 137 
+118 119 139 138 
+119 120 140 139 
+121 122 142 141 
+122 123 143 142 
+123 124 144 143 
+124 125 145 144 
+125 126 146 145 
+126 127 147 146 
+127 128 148 147 
+128 129 149 148 
+129 130 150 149 
+130 131 151 150 
+131 132 152 151 
+132 133 153 152 
+133 134 154 153 
+134 135 155 154 
+135 136 156 155 
+136 137 157 156 
+137 138 158 157 
+138 139 159 158 
+139 140 160 159 
+141 142 162 161 
+142 143 163 162 
+143 144 164 163 
+144 145 165 164 
+145 146 166 165 
+146 147 167 166 
+147 148 168 167 
+148 149 169 168 
+149 150 170 169 
+150 151 171 170 
+151 152 172 171 
+152 153 173 172 
+153 154 174 173 
+154 155 175 174 
+155 156 176 175 
+156 157 177 176 
+157 158 178 177 
+158 159 179 178 
+159 160 180 179 
+161 162 182 181 
+162 163 183 182 
+163 164 184 183 
+164 165 185 184 
+165 166 186 185 
+166 167 187 186 
+167 168 188 187 
+168 169 189 188 
+169 170 190 189 
+170 171 191 190 
+171 172 192 191 
+172 173 193 192 
+173 174 194 193 
+174 175 195 194 
+175 176 196 195 
+176 177 197 196 
+177 178 198 197 
+178 179 199 198 
+179 180 200 199 
+181 182 202 201 
+182 183 203 202 
+183 184 204 203 
+184 185 205 204 
+185 186 206 205 
+186 187 207 206 
+187 188 208 207 
+188 189 209 208 
+189 190 210 209 
+190 191 211 210 
+191 192 212 211 
+192 193 213 212 
+193 194 214 213 
+194 195 215 214 
+195 196 216 215 
+196 197 217 216 
+197 198 218 217 
+198 199 219 218 
+199 200 220 219 
+201 202 222 221 
+202 203 223 222 
+203 204 224 223 
+204 205 225 224 
+205 206 226 225 
+206 207 227 226 
+207 208 228 227 
+208 209 229 228 
+209 210 230 229 
+210 211 231 230 
+211 212 232 231 
+212 213 233 232 
+213 214 234 233 
+214 215 235 234 
+215 216 236 235 
+216 217 237 236 
+217 218 238 237 
+218 219 239 238 
+219 220 240 239 
+221 222 242 241 
+222 223 243 242 
+223 224 244 243 
+224 225 245 244 
+225 226 246 245 
+226 227 247 246 
+227 228 248 247 
+228 229 249 248 
+229 230 250 249 
+230 231 251 250 
+231 232 252 251 
+232 233 253 252 
+233 234 254 253 
+234 235 255 254 
+235 236 256 255 
+236 237 257 256 
+237 238 258 257 
+238 239 259 258 
+239 240 260 259 
+241 242 262 261 
+242 243 263 262 
+243 244 264 263 
+244 245 265 264 
+245 246 266 265 
+246 247 267 266 
+247 248 268 267 
+248 249 269 268 
+249 250 270 269 
+250 251 271 270 
+251 252 272 271 
+252 253 273 272 
+253 254 274 273 
+254 255 275 274 
+255 256 276 275 
+256 257 277 276 
+257 258 278 277 
+258 259 279 278 
+259 260 280 279 
+261 262 282 281 
+262 263 283 282 
+263 264 284 283 
+264 265 285 284 
+265 266 286 285 
+266 267 287 286 
+267 268 288 287 
+268 269 289 288 
+269 270 290 289 
+270 271 291 290 
+271 272 292 291 
+272 273 293 292 
+273 274 294 293 
+274 275 295 294 
+275 276 296 295 
+276 277 297 296 
+277 278 298 297 
+278 279 299 298 
+279 280 300 299 
+281 282 302 301 
+282 283 303 302 
+283 284 304 303 
+284 285 305 304 
+285 286 306 305 
+286 287 307 306 
+287 288 308 307 
+288 289 309 308 
+289 290 310 309 
+290 291 311 310 
+291 292 312 311 
+292 293 313 312 
+293 294 314 313 
+294 295 315 314 
+295 296 316 315 
+296 297 317 316 
+297 298 318 317 
+298 299 319 318 
+299 300 320 319 
+301 302 322 321 
+302 303 323 322 
+303 304 324 323 
+304 305 325 324 
+305 306 326 325 
+306 307 327 326 
+307 308 328 327 
+308 309 329 328 
+309 310 330 329 
+310 311 331 330 
+311 312 332 331 
+312 313 333 332 
+313 314 334 333 
+314 315 335 334 
+315 316 336 335 
+316 317 337 336 
+317 318 338 337 
+318 319 339 338 
+319 320 340 339 
+321 322 342 341 
+322 323 343 342 
+323 324 344 343 
+324 325 345 344 
+325 326 346 345 
+326 327 347 346 
+327 328 348 347 
+328 329 349 348 
+329 330 350 349 
+330 331 351 350 
+331 332 352 351 
+332 333 353 352 
+333 334 354 353 
+334 335 355 354 
+335 336 356 355 
+336 337 357 356 
+337 338 358 357 
+338 339 359 358 
+339 340 360 359 
+341 342 362 361 
+342 343 363 362 
+343 344 364 363 
+344 345 365 364 
+345 346 366 365 
+346 347 367 366 
+347 348 368 367 
+348 349 369 368 
+349 350 370 369 
+350 351 371 370 
+351 352 372 371 
+352 353 373 372 
+353 354 374 373 
+354 355 375 374 
+355 356 376 375 
+356 357 377 376 
+357 358 378 377 
+358 359 379 378 
+359 360 380 379 
+361 362 382 381 
+362 363 383 382 
+363 364 384 383 
+364 365 385 384 
+365 366 386 385 
+366 367 387 386 
+367 368 388 387 
+368 369 389 388 
+369 370 390 389 
+370 371 391 390 
+371 372 392 391 
+372 373 393 392 
+373 374 394 393 
+374 375 395 394 
+375 376 396 395 
+376 377 397 396 
+377 378 398 397 
+378 379 399 398 
+379 380 400 399 
+381 382 402 401 
+382 383 403 402 
+383 384 404 403 
+384 385 405 404 
+385 386 406 405 
+386 387 407 406 
+387 388 408 407 
+388 389 409 408 
+389 390 410 409 
+390 391 411 410 
+391 392 412 411 
+392 393 413 412 
+393 394 414 413 
+394 395 415 414 
+395 396 416 415 
+396 397 417 416 
+397 398 418 417 
+398 399 419 418 
+399 400 420 419 
+401 402 422 421 
+402 403 423 422 
+403 404 424 423 
+404 405 425 424 
+405 406 426 425 
+406 407 427 426 
+407 408 428 427 
+408 409 429 428 
+409 410 430 429 
+410 411 431 430 
+411 412 432 431 
+412 413 433 432 
+413 414 434 433 
+414 415 435 434 
+415 416 436 435 
+416 417 437 436 
+417 418 438 437 
+418 419 439 438 
+419 420 440 439 
+421 422 442 441 
+422 423 443 442 
+423 424 444 443 
+424 425 445 444 
+425 426 446 445 
+426 427 447 446 
+427 428 448 447 
+428 429 449 448 
+429 430 450 449 
+430 431 451 450 
+431 432 452 451 
+432 433 453 452 
+433 434 454 453 
+434 435 455 454 
+435 436 456 455 
+436 437 457 456 
+437 438 458 457 
+438 439 459 458 
+439 440 460 459 
+441 442 462 461 
+442 443 463 462 
+443 444 464 463 
+444 445 465 464 
+445 446 466 465 
+446 447 467 466 
+447 448 468 467 
+448 449 469 468 
+449 450 470 469 
+450 451 471 470 
+451 452 472 471 
+452 453 473 472 
+453 454 474 473 
+454 455 475 474 
+455 456 476 475 
+456 457 477 476 
+457 458 478 477 
+458 459 479 478 
+459 460 480 479 
+461 462 482 481 
+462 463 483 482 
+463 464 484 483 
+464 465 485 484 
+465 466 486 485 
+466 467 487 486 
+467 468 488 487 
+468 469 489 488 
+469 470 490 489 
+470 471 491 490 
+471 472 492 491 
+472 473 493 492 
+473 474 494 493 
+474 475 495 494 
+475 476 496 495 
+476 477 497 496 
+477 478 498 497 
+478 479 499 498 
+479 480 500 499 
+481 482 502 501 
+482 483 503 502 
+483 484 504 503 
+484 485 505 504 
+485 486 506 505 
+486 487 507 506 
+487 488 508 507 
+488 489 509 508 
+489 490 510 509 
+490 491 511 510 
+491 492 512 511 
+492 493 513 512 
+493 494 514 513 
+494 495 515 514 
+495 496 516 515 
+496 497 517 516 
+497 498 518 517 
+498 499 519 518 
+499 500 520 519 
+501 502 522 521 
+502 503 523 522 
+503 504 524 523 
+504 505 525 524 
+505 506 526 525 
+506 507 527 526 
+507 508 528 527 
+508 509 529 528 
+509 510 530 529 
+510 511 531 530 
+511 512 532 531 
+512 513 533 532 
+513 514 534 533 
+514 515 535 534 
+515 516 536 535 
+516 517 537 536 
+517 518 538 537 
+518 519 539 538 
+519 520 540 539 
+521 522 542 541 
+522 523 543 542 
+523 524 544 543 
+524 525 545 544 
+525 526 546 545 
+526 527 547 546 
+527 528 548 547 
+528 529 549 548 
+529 530 550 549 
+530 531 551 550 
+531 532 552 551 
+532 533 553 552 
+533 534 554 553 
+534 535 555 554 
+535 536 556 555 
+536 537 557 556 
+537 538 558 557 
+538 539 559 558 
+539 540 560 559 
+541 542 562 561 
+542 543 563 562 
+543 544 564 563 
+544 545 565 564 
+545 546 566 565 
+546 547 567 566 
+547 548 568 567 
+548 549 569 568 
+549 550 570 569 
+550 551 571 570 
+551 552 572 571 
+552 553 573 572 
+553 554 574 573 
+554 555 575 574 
+555 556 576 575 
+556 557 577 576 
+557 558 578 577 
+558 559 579 578 
+559 560 580 579 
+561 562 582 581 
+562 563 583 582 
+563 564 584 583 
+564 565 585 584 
+565 566 586 585 
+566 567 587 586 
+567 568 588 587 
+568 569 589 588 
+569 570 590 589 
+570 571 591 590 
+571 572 592 591 
+572 573 593 592 
+573 574 594 593 
+574 575 595 594 
+575 576 596 595 
+576 577 597 596 
+577 578 598 597 
+578 579 599 598 
+579 580 600 599 
+581 582 602 601 
+582 583 603 602 
+583 584 604 603 
+584 585 605 604 
+585 586 606 605 
+586 587 607 606 
+587 588 608 607 
+588 589 609 608 
+589 590 610 609 
+590 591 611 610 
+591 592 612 611 
+592 593 613 612 
+593 594 614 613 
+594 595 615 614 
+595 596 616 615 
+596 597 617 616 
+597 598 618 617 
+598 599 619 618 
+599 600 620 619 
+601 602 622 621 
+602 603 623 622 
+603 604 624 623 
+604 605 625 624 
+605 606 626 625 
+606 607 627 626 
+607 608 628 627 
+608 609 629 628 
+609 610 630 629 
+610 611 631 630 
+611 612 632 631 
+612 613 633 632 
+613 614 634 633 
+614 615 635 634 
+615 616 636 635 
+616 617 637 636 
+617 618 638 637 
+618 619 639 638 
+619 620 640 639 
+621 622 642 641 
+622 623 643 642 
+623 624 644 643 
+624 625 645 644 
+625 626 646 645 
+626 627 647 646 
+627 628 648 647 
+628 629 649 648 
+629 630 650 649 
+630 631 651 650 
+631 632 652 651 
+632 633 653 652 
+633 634 654 653 
+634 635 655 654 
+635 636 656 655 
+636 637 657 656 
+637 638 658 657 
+638 639 659 658 
+639 640 660 659 
+641 642 662 661 
+642 643 663 662 
+643 644 664 663 
+644 645 665 664 
+645 646 666 665 
+646 647 667 666 
+647 648 668 667 
+648 649 669 668 
+649 650 670 669 
+650 651 671 670 
+651 652 672 671 
+652 653 673 672 
+653 654 674 673 
+654 655 675 674 
+655 656 676 675 
+656 657 677 676 
+657 658 678 677 
+658 659 679 678 
+659 660 680 679 
+661 662 682 681 
+662 663 683 682 
+663 664 684 683 
+664 665 685 684 
+665 666 686 685 
+666 667 687 686 
+667 668 688 687 
+668 669 689 688 
+669 670 690 689 
+670 671 691 690 
+671 672 692 691 
+672 673 693 692 
+673 674 694 693 
+674 675 695 694 
+675 676 696 695 
+676 677 697 696 
+677 678 698 697 
+678 679 699 698 
+679 680 700 699 
+681 682 702 701 
+682 683 703 702 
+683 684 704 703 
+684 685 705 704 
+685 686 706 705 
+686 687 707 706 
+687 688 708 707 
+688 689 709 708 
+689 690 710 709 
+690 691 711 710 
+691 692 712 711 
+692 693 713 712 
+693 694 714 713 
+694 695 715 714 
+695 696 716 715 
+696 697 717 716 
+697 698 718 717 
+698 699 719 718 
+699 700 720 719 
+701 702 722 721 
+702 703 723 722 
+703 704 724 723 
+704 705 725 724 
+705 706 726 725 
+706 707 727 726 
+707 708 728 727 
+708 709 729 728 
+709 710 730 729 
+710 711 731 730 
+711 712 732 731 
+712 713 733 732 
+713 714 734 733 
+714 715 735 734 
+715 716 736 735 
+716 717 737 736 
+717 718 738 737 
+718 719 739 738 
+719 720 740 739 
+721 722 742 741 
+722 723 743 742 
+723 724 744 743 
+724 725 745 744 
+725 726 746 745 
+726 727 747 746 
+727 728 748 747 
+728 729 749 748 
+729 730 750 749 
+730 731 751 750 
+731 732 752 751 
+732 733 753 752 
+733 734 754 753 
+734 735 755 754 
+735 736 756 755 
+736 737 757 756 
+737 738 758 757 
+738 739 759 758 
+739 740 760 759 
+741 742 762 761 
+742 743 763 762 
+743 744 764 763 
+744 745 765 764 
+745 746 766 765 
+746 747 767 766 
+747 748 768 767 
+748 749 769 768 
+749 750 770 769 
+750 751 771 770 
+751 752 772 771 
+752 753 773 772 
+753 754 774 773 
+754 755 775 774 
+755 756 776 775 
+756 757 777 776 
+757 758 778 777 
+758 759 779 778 
+759 760 780 779 
+761 762 782 781 
+762 763 783 782 
+763 764 784 783 
+764 765 785 784 
+765 766 786 785 
+766 767 787 786 
+767 768 788 787 
+768 769 789 788 
+769 770 790 789 
+770 771 791 790 
+771 772 792 791 
+772 773 793 792 
+773 774 794 793 
+774 775 795 794 
+775 776 796 795 
+776 777 797 796 
+777 778 798 797 
+778 779 799 798 
+779 780 800 799 
+781 782 802 801 
+782 783 803 802 
+783 784 804 803 
+784 785 805 804 
+785 786 806 805 
+786 787 807 806 
+787 788 808 807 
+788 789 809 808 
+789 790 810 809 
+790 791 811 810 
+791 792 812 811 
+792 793 813 812 
+793 794 814 813 
+794 795 815 814 
+795 796 816 815 
+796 797 817 816 
+797 798 818 817 
+798 799 819 818 
+799 800 820 819 
+801 802 822 821 
+802 803 823 822 
+803 804 824 823 
+804 805 825 824 
+805 806 826 825 
+806 807 827 826 
+807 808 828 827 
+808 809 829 828 
+809 810 830 829 
+810 811 831 830 
+811 812 832 831 
+812 813 833 832 
+813 814 834 833 
+814 815 835 834 
+815 816 836 835 
+816 817 837 836 
+817 818 838 837 
+818 819 839 838 
+819 820 840 839 
+821 822 842 841 
+822 823 843 842 
+823 824 844 843 
+824 825 845 844 
+825 826 846 845 
+826 827 847 846 
+827 828 848 847 
+828 829 849 848 
+829 830 850 849 
+830 831 851 850 
+831 832 852 851 
+832 833 853 852 
+833 834 854 853 
+834 835 855 854 
+835 836 856 855 
+836 837 857 856 
+837 838 858 857 
+838 839 859 858 
+839 840 860 859 
+841 842 862 861 
+842 843 863 862 
+843 844 864 863 
+844 845 865 864 
+845 846 866 865 
+846 847 867 866 
+847 848 868 867 
+848 849 869 868 
+849 850 870 869 
+850 851 871 870 
+851 852 872 871 
+852 853 873 872 
+853 854 874 873 
+854 855 875 874 
+855 856 876 875 
+856 857 877 876 
+857 858 878 877 
+858 859 879 878 
+859 860 880 879 
+861 862 882 881 
+862 863 883 882 
+863 864 884 883 
+864 865 885 884 
+865 866 886 885 
+866 867 887 886 
+867 868 888 887 
+868 869 889 888 
+869 870 890 889 
+870 871 891 890 
+871 872 892 891 
+872 873 893 892 
+873 874 894 893 
+874 875 895 894 
+875 876 896 895 
+876 877 897 896 
+877 878 898 897 
+878 879 899 898 
+879 880 900 899 
+881 882 902 901 
+882 883 903 902 
+883 884 904 903 
+884 885 905 904 
+885 886 906 905 
+886 887 907 906 
+887 888 908 907 
+888 889 909 908 
+889 890 910 909 
+890 891 911 910 
+891 892 912 911 
+892 893 913 912 
+893 894 914 913 
+894 895 915 914 
+895 896 916 915 
+896 897 917 916 
+897 898 918 917 
+898 899 919 918 
+899 900 920 919 
+901 902 922 921 
+902 903 923 922 
+903 904 924 923 
+904 905 925 924 
+905 906 926 925 
+906 907 927 926 
+907 908 928 927 
+908 909 929 928 
+909 910 930 929 
+910 911 931 930 
+911 912 932 931 
+912 913 933 932 
+913 914 934 933 
+914 915 935 934 
+915 916 936 935 
+916 917 937 936 
+917 918 938 937 
+918 919 939 938 
+919 920 940 939 
+921 922 942 941 
+922 923 943 942 
+923 924 944 943 
+924 925 945 944 
+925 926 946 945 
+926 927 947 946 
+927 928 948 947 
+928 929 949 948 
+929 930 950 949 
+930 931 951 950 
+931 932 952 951 
+932 933 953 952 
+933 934 954 953 
+934 935 955 954 
+935 936 956 955 
+936 937 957 956 
+937 938 958 957 
+938 939 959 958 
+939 940 960 959 
+941 942 962 961 
+942 943 963 962 
+943 944 964 963 
+944 945 965 964 
+945 946 966 965 
+946 947 967 966 
+947 948 968 967 
+948 949 969 968 
+949 950 970 969 
+950 951 971 970 
+951 952 972 971 
+952 953 973 972 
+953 954 974 973 
+954 955 975 974 
+955 956 976 975 
+956 957 977 976 
+957 958 978 977 
+958 959 979 978 
+959 960 980 979 
+961 962 982 981 
+962 963 983 982 
+963 964 984 983 
+964 965 985 984 
+965 966 986 985 
+966 967 987 986 
+967 968 988 987 
+968 969 989 988 
+969 970 990 989 
+970 971 991 990 
+971 972 992 991 
+972 973 993 992 
+973 974 994 993 
+974 975 995 994 
+975 976 996 995 
+976 977 997 996 
+977 978 998 997 
+978 979 999 998 
+979 980 1000 999 
+981 982 2 1 
+982 983 3 2 
+983 984 4 3 
+984 985 5 4 
+985 986 6 5 
+986 987 7 6 
+987 988 8 7 
+988 989 9 8 
+989 990 10 9 
+990 991 11 10 
+991 992 12 11 
+992 993 13 12 
+993 994 14 13 
+994 995 15 14 
+995 996 16 15 
+996 997 17 16 
+997 998 18 17 
+998 999 19 18 
+999 1000 20 19 

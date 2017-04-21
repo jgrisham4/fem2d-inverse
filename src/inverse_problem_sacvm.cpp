@@ -8,6 +8,7 @@
 #include <random>
 #include "laplace.h"
 #include "opt_driver.h"
+#include "util.h"
 
 /***************************************************************\
  * This code solves a steady-state heat transfer inverse       *
@@ -18,11 +19,11 @@
  * computing the geometry on the inside of the pipe required   *
  * to produce the measured heat flux.  This task is            *
  * accomplished using a gradient-based optimization algorithm. *
- * In this case, either steepest descent or conjugate          *
- * direction was used.  The sensitivity of the objective       *
- * function (L2 norm of difference between target and computed *
- * heat flux) is computed using either the semi-analytic       *
- * method or the semi-analytic complex variable method.        *
+ * In this case, either steepest descent or BFGS was used.     *
+ * The sensitivity of the objective function (L2 norm of       *
+ * difference between target and computed heat flux) is        *
+ * computed using either the semi-analytic method or the       *
+ * semi-analytic complex variable method.                      *
  *                                                             *
  * UT Arlington CFDLab                                         *
  * Author: James Grisham                                       *
@@ -33,10 +34,13 @@
 int main() {
 
   // Inputs for optimization
-  unsigned int max_iterations = 500;
-  double dr = 1.0e-20;
-  double tolerance = 1.0e-3;
+  unsigned int max_iterations = 100;
+  double dr;
+  double tolerance = 1.0e-4;
   bool use_sacvm = true;
+
+  // Reading step size used for sensitivities from file
+  dr = read_step_size<double>("step_size.inp");
 
   // Creating a new optimization driver
   opt_driver<laplace<double> > opt;
@@ -63,7 +67,6 @@ int main() {
   std::list<int> indices(opt.get_imax()-1);
   std::vector<double> r_guess(opt.get_imax()-1);
   std::iota(indices.begin(),indices.end(),0);
-  //std::transform(indices.begin(),indices.end(),r_guess.begin(),[&](int i){return circle(double(i)*dtheta); });
   std::transform(indices.begin(),indices.end(),r_guess.begin(),[&](int i){return ellipse(double(i)*dtheta); });
 
   // Writing initial guess to file
@@ -81,11 +84,22 @@ int main() {
 
   // Calling optimization function
   std::cout << "Optimizing." << std::endl;
-  //std::vector<double> ri_opt = opt.optimize_steepest_descent(r_guess,max_iterations,dr,tolerance,use_sacvm);
-  //std::vector<double> ri_opt = opt.optimize_conjugate_direction(r_guess,max_iterations,dr,tolerance,use_sacvm);
   std::vector<double> ri_opt = opt.optimize_bfgs(r_guess,max_iterations,dr,tolerance,use_sacvm);
 
+  // Freeing dynamically allocated memory
   delete lp;
+
+  // Writing results to file
+  std::ofstream opt_out("opt_sacvm.dat");
+  if (!opt_out.is_open()) {
+    std::cerr << "\nCan't open opt_sacvm.dat." << std::endl;
+    std::cerr << "Exiting.\n\n";
+    exit(-1);
+  }
+  opt_out << opt;
+
+  // Closing results file
+  opt_out.close();
 
   return 0;
 
